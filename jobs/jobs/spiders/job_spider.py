@@ -1,5 +1,9 @@
 import scrapy
 
+'''
+only scrapes data from job cards in search results
+'''
+
 class JobSpider(scrapy.Spider):
     name = 'job_spider'
     start_urls = ['https://www.reed.co.uk/jobs/data-analyst-jobs']

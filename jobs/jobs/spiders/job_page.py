@@ -1,5 +1,8 @@
 import scrapy
 
+'''
+scrapes data by visting each job page in search results
+'''
 class ReedSpider(scrapy.Spider):
     name = 'job_page'
     start_urls = ['https://www.reed.co.uk/jobs/data-analyst-jobs']
@@ -14,12 +17,20 @@ class ReedSpider(scrapy.Spider):
             job_url = response.urljoin(relative_url)
             yield response.follow(job_url, callback=self.parse_job)
 
+        '''
+        pagination logic for following next page of search results
+        '''
         next_page = response.css('a.page-link.next::attr(href)').get()
         print(next_page)
         if next_page:
             print(next_page)
             yield response.follow(next_page, callback=self.parse)
 
+    """
+Function to parse each page of job and yeild the results
+
+
+    """
     def parse_job(self, response):
         def clean_job_type(value):
             return value.strip() if value else None
